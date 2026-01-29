@@ -1,0 +1,3 @@
+[submodule "external/markdown_resume"]
+	path = external/markdown_resume
+	url = https://github.com/junian/markdown-resume.git
