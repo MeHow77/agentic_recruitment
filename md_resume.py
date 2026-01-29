@@ -119,19 +119,19 @@ if __name__ == "__main__":
     template_md_j2 = "templates/resume_template.md.j2"
     master_json = "data/master_data.json"
     personal_json = "data/personal_data.json"
-    cli = "markdown-resume/packages/pdf-cli/bin/md-resume.js"
+    cli = "external/markdown_resume/packages/pdf-cli/bin/md-resume.js"
 
     combined_data = load_and_merge_data(personal_json, master_json)
 
     md_path = render_markdown(
         template=template_md_j2,
         data=combined_data,
-        output="resume.md",
+        output="outputs/resume.md",
     )
 
     generate_pdf(
         input_md="resume.md",
-        output_pdf="resume.pdf",
+        output_pdf="outputs/resume.pdf",
         cli_path=cli,
         paper="A4",
         font_size=12,

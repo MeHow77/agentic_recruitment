@@ -3,13 +3,13 @@
 
 # {{ personal.name }}
 
-<span class="iconify" data-icon="charm:person"></span> [{{ personal.website }}](https://{{ personal.website }})
-  : <span class="iconify" data-icon="tabler:brand-github"></span> [{{ personal.github }}](https://github.com/{{ personal.github }})
-  : <span class="iconify" data-icon="tabler:phone"></span> [{{ personal.phone }}](https://wa.me/{{ personal.phone_clean }})
-
-<span class="iconify" data-icon="ic:outline-location-on"></span> {{ personal.address }}
-  : <span class="iconify" data-icon="tabler:brand-linkedin"></span> [{{ personal.linkedin }}](https://linkedin.com/in/{{ personal.linkedin }}/)
+<span class="iconify" data-icon="tabler:phone"></span> [{{ personal.phone }}](https://wa.me/{{ personal.phone_clean }})
   : <span class="iconify" data-icon="tabler:mail"></span> [{{ personal.email }}](mailto:{{ personal.email }})
+  : <span class="iconify" data-icon="ic:outline-location-on"></span> {{ personal.address }}
+
+
+<span class="iconify" data-icon="tabler:brand-github"></span> [{{ personal.github }}](https://github.com/{{ personal.github }})
+  : <span class="iconify" data-icon="tabler:brand-linkedin"></span> [{{ personal.linkedin }}](https://linkedin.com/in/{{ personal.linkedin }}/)
 
 {% if summary %}
 ## Professional Summary
