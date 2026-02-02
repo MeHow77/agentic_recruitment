@@ -1,4 +1,4 @@
-from src.llm.handler import LLMHandler
+from src.llm.provider import LLMProvider
 from src.models.job_keywords import JobDescriptionKeywords
 
 EXTRACTION_PROMPT = """\
@@ -20,8 +20,8 @@ Job description:
 
 async def extract_job_keywords(
     markdown_content: str,
-    llm_handler: LLMHandler,
+    provider: LLMProvider,
 ) -> JobDescriptionKeywords:
     """Extract structured keywords from a job description markdown string."""
     prompt = EXTRACTION_PROMPT.format(markdown_content=markdown_content)
-    return await llm_handler.generate_structured(prompt, JobDescriptionKeywords)
+    return await provider.generate_structured(prompt, JobDescriptionKeywords)

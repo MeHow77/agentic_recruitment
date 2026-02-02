@@ -10,7 +10,3 @@ class StorageProvider(ABC):
         """Serialize a Pydantic model (or list of models) to persistent storage."""
         ...
 
-    @abstractmethod
-    def save_text(self, content: str, path: Path) -> Path:
-        """Persist a plain text string. Returns the resolved path."""
-        ...

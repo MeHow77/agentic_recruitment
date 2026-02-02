@@ -6,10 +6,11 @@ from pathlib import Path
 
 from src.agents.extract_job_keywords import extract_job_keywords
 from src.job_description_data_extraction import docling_url_to_markdown
-from src.json_to_pdf import load_and_merge_data, render_markdown, generate_pdf
-from src.models.extraction_run import ExtractionRun, JobKeywordResult
+from src.data.json_file_provider import JsonFileDataProvider
+from src.rendering.jinja_renderer import Jinja2TemplateRenderer
+from src.export.markdown_to_pdf_exporter import MarkdownToPDFExporter
+from src.models.extraction_run import JobKeywordResult
 from src.llm.factory import create_llm_provider
-from src.llm.handler import LLMHandler
 from src.storage.local_file_storage import LocalFileStorage
 
 JOB_URLS: list[str] = [
@@ -31,15 +32,12 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Resume generator")
 
     parser.add_argument("--port", type=int, default=os.getenv("PORT"))
-    parser.add_argument("--gemini_api_key", type=str, default=os.getenv("GEMINI_API_KEY"))
-    parser.add_argument("--openai_api_key", type=str, default=os.getenv("OPENAI_API_KEY"))
-    parser.add_argument("--llm-provider", type=str, required=True,
-                        default=os.getenv("LLM_PROVIDER"),
-                        choices=["gemini", "openai"])
-    parser.add_argument("--md-j2-template", default=os.getenv("MD_J2_TEMPLATE"))
-    parser.add_argument("--master-json", default=os.getenv("MASTER_JSON"))
-    parser.add_argument("--personal-json", default=os.getenv("PERSONAL_JSON"))
-    parser.add_argument("--cli-converter-path", default=os.getenv("CLI_CONVERTER_PATH"))
+    parser.add_argument("--llm_api_key", type=str, default=os.getenv("LLM_API_KEY"))
+    parser.add_argument("--llm_provider", type=str, default=os.getenv("LLM_PROVIDER"), choices=["gemini", "openai"])
+    parser.add_argument("--md_j2_template", default=os.getenv("MD_J2_TEMPLATE"))
+    parser.add_argument("--master_json", default=os.getenv("MASTER_JSON"))
+    parser.add_argument("--personal_json", default=os.getenv("PERSONAL_JSON"))
+    parser.add_argument("--cli_converter_path", default=os.getenv("CLI_CONVERTER_PATH"))
 
     parser.add_argument("--log-level", default=os.getenv("LOG_LEVEL", "INFO"))
 
@@ -48,6 +46,7 @@ def parse_args():
     args.master_json = Path(args.master_json)
     args.personal_json = Path(args.personal_json)
     args.cli_converter_path = Path(args.cli_converter_path)
+    args.llm_provider = args.llm_provider
     return args
 
 
@@ -67,40 +66,36 @@ async def main():
 
     if not JOB_URLS:
         logger.info("No job URLs configured — skipping keyword extraction")
-    else:
-        provider = create_llm_provider(
-            llm_provider=args.llm_provider,
-            gemini_api_key=args.gemini_api_key,
-            openai_api_key=args.openai_api_key,
-        )
-        llm_handler = LLMHandler(provider)
-
-        run = ExtractionRun()
-        for url in JOB_URLS:
-            logger.info("Extracting keywords from: %s", url)
-            markdown_content = docling_url_to_markdown(url)
-            logger.info("Extracted %d chars of markdown from %s", len(markdown_content), url)
-            keywords = await extract_job_keywords(markdown_content, llm_handler)
-
-            run.results.append(JobKeywordResult(source_url=url, keywords=keywords))
-
-        storage.save_model(run, Path("extraction_run.json"))
-
-    combined_data = load_and_merge_data(args.personal_json, args.master_json)
-
-    md_path = render_markdown(
-        template=args.md_j2_template,
-        data=combined_data,
-        output="outputs/resume.md",
+        return
+    provider = create_llm_provider(
+        llm_provider=args.llm_provider,
+        llm_api_key=args.llm_api_key,
     )
 
-    generate_pdf(
-        input_md=md_path,
-        output_pdf="outputs/resume.pdf",
-        cli_path=args.cli_converter_path,
-        paper="A4",
-        font_size=12,
-    )
+    results: list[JobKeywordResult] = []
+    for url in JOB_URLS:
+        logger.info("Extracting keywords from: %s", url)
+        markdown_content = docling_url_to_markdown(url)
+        logger.info("Extracted %d chars of markdown from %s", len(markdown_content), url)
+        keywords = await extract_job_keywords(markdown_content, provider)
+        results.append(JobKeywordResult(source_url=url, keywords=keywords))
+
+    if not results:
+        logger.info(f"No keywords extracted from {JOB_URLS}")
+        return
+
+    logger.info(f"Saving extracted keywords from {JOB_URLS}")
+    storage.save_model(results, Path("extraction_run.json"))
+
+    data_provider = JsonFileDataProvider(args.personal_json, args.master_json)
+    renderer = Jinja2TemplateRenderer(args.md_j2_template)
+    exporter = MarkdownToPDFExporter(renderer=renderer, cli_path=args.cli_converter_path)
+
+    logger.info("Merging data from personal_data.json and master_data.json")
+    combined_data = data_provider.load_data()
+
+    logger.info("Generating resume PDF")
+    exporter.export(data=combined_data, output_path=Path("outputs/resume.pdf"))
 
 
 if __name__ == "__main__":
