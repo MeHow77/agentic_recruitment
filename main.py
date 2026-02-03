@@ -87,12 +87,12 @@ async def main():
     logger.info(f"Saving extracted keywords from {JOB_URLS}")
     storage.save_model(results, Path("extraction_run.json"))
 
-    data_provider = JsonFileDataProvider(args.personal_json, args.master_json)
+    data_provider = JsonFileDataProvider()
     renderer = Jinja2TemplateRenderer(args.md_j2_template)
     exporter = MarkdownToPDFExporter(renderer=renderer, cli_path=args.cli_converter_path)
 
     logger.info("Merging data from personal_data.json and master_data.json")
-    combined_data = data_provider.load_data()
+    combined_data = data_provider.load_data(args.personal_json, args.master_json)
 
     logger.info("Generating resume PDF")
     exporter.export(data=combined_data, output_path=Path("outputs/resume.pdf"))
