@@ -1,4 +1,15 @@
+from typing import Literal
+
 from pydantic import BaseModel, Field
+
+SkillCategory = Literal["technical", "soft", "certification", "education"]
+SkillImportance = Literal["required", "preferred"]
+
+
+class SkillRequirement(BaseModel):
+    skills: list[str] = Field(description="Skills in this group")
+    category: SkillCategory = Field(description="Skill category")
+    importance: SkillImportance = Field(description="Whether required or preferred")
 
 
 class JobDescriptionKeywords(BaseModel):
@@ -7,11 +18,9 @@ class JobDescriptionKeywords(BaseModel):
     years_of_experience: str = Field(description="Required years of experience (e.g. '3-5 years', '5+')")
     company_name: str = Field(description="Name of the hiring company")
     department_or_team: str = Field(description="Department or team name, if mentioned")
-    required_technical_skills: list[str] = Field(description="Technical skills explicitly required")
-    preferred_technical_skills: list[str] = Field(description="Technical skills listed as nice-to-have or preferred")
-    required_soft_skills: list[str] = Field(description="Soft skills explicitly required")
-    required_education: str = Field(description="Minimum education requirement (e.g. 'Bachelor's in CS or equivalent')")
-    preferred_certifications: list[str] = Field(description="Certifications listed as preferred or required")
+    skill_requirements: list[SkillRequirement] = Field(
+        description="Categorized skill requirements from the posting"
+    )
     key_responsibilities: list[str] = Field(description="Main responsibilities and duties")
     industry_domain: str = Field(description="Industry or domain the role operates in")
     keywords_for_ats: list[str] = Field(

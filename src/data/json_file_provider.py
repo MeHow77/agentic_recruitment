@@ -4,6 +4,7 @@ from typing import Any, Dict
 from pathlib import Path
 
 from src.data.provider import DataProvider
+from src.models.experience_data import ExperienceData
 
 logger = logging.getLogger(__name__)
 
@@ -29,3 +30,25 @@ class JsonFileDataProvider(DataProvider):
             master_path,
         )
         return merged_data
+
+    @classmethod
+    def load_experience_data(cls, path: Path) -> ExperienceData:
+        if not path.exists():
+            raise FileNotFoundError(f"Master data file not found: {path}")
+
+        with open(path, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+
+        logger.info("Loaded experience data from %s", path)
+        return ExperienceData.model_validate(raw)
+
+    @classmethod
+    def load_personal_data(cls, path: Path) -> Dict[str, Any]:
+        if not path.exists():
+            raise FileNotFoundError(f"Personal data file not found: {path}")
+
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        logger.info("Loaded personal data from %s", path)
+        return data

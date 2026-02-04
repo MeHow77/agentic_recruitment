@@ -11,10 +11,15 @@
 <span class="iconify" data-icon="tabler:brand-github"></span> [{{ personal.github }}](https://github.com/{{ personal.github }})
   : <span class="iconify" data-icon="tabler:brand-linkedin"></span> [{{ personal.linkedin }}](https://linkedin.com/in/{{ personal.linkedin }}/)
 
-{% if summary %}
-## Professional Summary
-{{ summary }}
-{% endif %}
+
+## Skills
+
+**Programming Languages:** {{ skills.languages | join(", ") }}
+
+**Tools and Frameworks:** {{ skills.tools | join(", ") }}
+
+**Languages:** {{ skills.spoken | join(", ") }}
+
 
 ## Experience
 
@@ -41,11 +46,8 @@
 
 {% endfor %}
 
-## Skills
-
-**Programming Languages:** {{ skills.languages | join(", ") }}
-
-**Tools and Frameworks:** {{ skills.tools | join(", ") }}
-
-**Languages:** {{ skills.spoken | join(", ") }}
+{#{% if summary %}#}
+{### Professional Summary#}
+{#{{ summary }}#}
+{#{% endif %}#}
 

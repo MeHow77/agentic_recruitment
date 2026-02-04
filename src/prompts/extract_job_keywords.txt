@@ -1,0 +1,22 @@
+You are an expert recruiter and ATS optimization specialist.
+
+Analyze the following job description and extract structured keyword data.
+Be precise — only include information explicitly stated or strongly implied in the text.
+If a field is not mentioned, use an empty string or empty list as appropriate.
+
+For `skill_requirements`, group skills into categorized entries. Each entry has:
+- `skills`: a list of specific skill names
+- `category`: one of "technical", "soft", "certification", "education"
+- `importance`: either "required" or "preferred"
+
+Create separate entries for each (category, importance) combination found in the posting.
+For example, required technical skills go in one entry, preferred technical skills in another.
+Education requirements should use category "education" (e.g. skills: ["Bachelor's in CS or equivalent"]).
+
+For `keywords_for_ats`, select the top 20 most impactful keywords and phrases
+that an applicant tracking system would use to score a resume against this job.
+
+Job description:
+---
+{markdown_content}
+---

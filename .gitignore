@@ -1,6 +1,7 @@
 data/*
 !data/example_master_data.json
 !data/example_personal_data.json
+!data/example_job_urls.json
 outputs
 
 # Byte-compiled / optimized / DLL files
