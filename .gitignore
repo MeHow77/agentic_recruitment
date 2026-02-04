@@ -1,11 +1,16 @@
+data/*
+!data/example_master_data.json
+!data/example_personal_data.json
+!data/example_job_urls.json
+outputs
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
-
+.idea
 # C extensions
 *.so
-
 # Distribution / packaging
 .Python
 build/
@@ -200,6 +205,9 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+#Claude code
+CLAUDE.md
 
 # Marimo
 marimo/_static/

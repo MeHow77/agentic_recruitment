@@ -1,0 +1,111 @@
+{
+  "summary": "Your optional summary here.",
+  "experience": [
+    {
+      "title": "Machine Learning Engineer Intern",
+      "company": "Slow Feet Technology",
+      "date": "Jul 2021 - Present",
+      "bullets": [
+        "Devised a new food-agnostic formulation for fine-grained cross-ingredient meal cooking and subsumed the recent popular works into the proposed scheme",
+        "Proposed a cream of mushroom soup recipe which is competitive when compared with the SOTA recipes with complex steps by only altering the way of cutting mushroom, published in NeurIPS 2099",
+        "Developed a pan for meal cooking which is benefiting the group members' research work"
+      ]
+    },
+    {
+      "title": "Research Intern",
+      "company": "Paddling University",
+      "date": "Aug 2020 - Present",
+      "bullets": [
+        "Designed an efficient method for mapo tofu quality estimation via thermometer",
+        "Proposed a fast stir frying algorithm for tofu cooking problems, which specifies the amount of the hot sauce instead of using terms like 'as much as you can', published in CVPR 2077",
+        "Outperformed SOTA methods while cooking much more efficiently in experiments on popular tofu"
+      ]
+    },
+    {
+      "title": "Research Assistant",
+      "company": "Huangdu Institute of Technology",
+      "date": "Mar 2020 - Jun 2020",
+      "bullets": [
+        "Proposed a novel framework consisting of a spoon and a pair of chopsticks for eating mapo toufu",
+        "Designed a tofu filtering strategy inspired by beans grinding method for building a dataset for this new task",
+        "Designed two new evaluation criteria to assess the novelty and diversity of the eating plans",
+        "Outperformed baselines and existing methods substantially in terms of diversity, novelty and coherence"
+      ]
+    },
+    {
+      "title": "Research Intern",
+      "company": "Paddling University",
+      "date": "Jul 2018 - Aug 2018",
+      "bullets": [
+        "Designed two sandwiches consisting of breads and meat of two traditional bacon cheese burgers to make use of unused ingredients",
+        "Utilized the structure duality to boost the cooking speed of two dual tasks based on shared ingredients",
+        "Outperformed strong baselines on QWE'15 and ASDF'14 dataset"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "M.S. in Computer Science",
+      "date": "Sep 2021 - Jan 2023",
+      "school": "University of Charles River",
+      "location": "Boston, MA"
+    },
+    {
+      "degree": "B.Eng. in Software Engineering",
+      "date": "Sep 2016 - Jul 2020",
+      "school": "Huangdu Institute of Technology",
+      "location": "Shanghai, China"
+    }
+  ],
+  "skills": {
+    "languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "HTML",
+      "CSS",
+      "Java"
+    ],
+    "tools": [
+      "Git",
+      "PyTorch",
+      "Keras",
+      "scikit-learn",
+      "Linux",
+      "Vue",
+      "React",
+      "Django",
+      "LaTeX"
+    ],
+    "spoken": [
+      "English (proficient)",
+      "Indonesia (native)"
+    ]
+  },
+  "awards": [
+    {
+      "title": "Gold",
+      "award": "International Collegiate Catching Fish Contest (ICCFC)",
+      "year": 2018
+    },
+    {
+      "title": "First Prize",
+      "award": "China National Scholarship for Outstanding Dragons",
+      "year": "2017, 2018"
+    }
+  ],
+  "publications": [
+    {
+      "id": "P1",
+      "title": "Eating is All You Need",
+      "authors": "Haha Ha, San Zhang",
+      "conference": "Conference on Neural Information Processing Systems (NeurIPS), 2099"
+    },
+    {
+      "id": "P2",
+      "title": "You Only Cook Once: Unified, Real-Time Mapo Tofu Recipe",
+      "authors": "Haha Ha, San Zhang, Si Li, Wu Wang",
+      "conference": "Computer Vision and Pattern Recognition Conference (CVPR), 2077 (Best Paper Honorable Mention)"
+    }
+  ]
+}
