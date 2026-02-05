@@ -5,7 +5,7 @@ from src.llm.provider import LLMProvider
 
 
 class OpenAIProvider(LLMProvider):
-    def __init__(self, api_key: str, model: str = "gpt-4o-2024-08-06") -> None:
+    def __init__(self, api_key: str, model: str = "gpt-5-mini") -> None:
         self._client = AsyncOpenAI(api_key=api_key)
         self._model = model
 

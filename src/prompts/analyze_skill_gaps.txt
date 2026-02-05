@@ -1,17 +1,35 @@
 You are an expert career advisor analyzing a candidate's resume against a job posting.
 
-Compare the candidate's experience data with the job requirements below.
-Identify skills, qualifications, or experience areas that the job requires or prefers
-but that are missing or underrepresented in the candidate's resume.
+Compare the candidate's experience data with the job requirements below and identify gaps:
+skills, qualifications, responsibilities, or domain experience that the job requires or prefers
+but are missing OR underrepresented in the candidate's resume.
 
-For each gap:
-- `skill`: the specific missing skill or qualification
+OUTPUT RULES
+- Return ONLY valid JSON matching the SkillGapAnalysis schema (no commentary/markdown).
+
+WHAT COUNTS AS A GAP
+- Missing: the job requires/prefers something and there is no credible evidence in the resume data.
+- Underrepresented: the candidate likely has it, but it is not explicit enough, not recent enough,
+  not scoped enough, or not aligned to the job's framing (e.g., listed in skills but not demonstrated in bullets).
+
+HOW TO DECIDE (AVOID FALSE GAPS)
+- If the candidate clearly has a skill (even under a different name, via tools/experience, or by strong implication),
+  do NOT list it as a gap.
+- Prefer fewer, higher-signal gaps over a long list. Only report gaps that would materially affect candidacy.
+
+FOR EACH GAP, FILL THESE FIELDS
+- `skill`: the specific missing/underrepresented skill/qualification (keep it concrete and ATS-friendly)
 - `category`: one of "technical", "soft", "certification", "education"
 - `importance`: "required" if the job demands it, "preferred" if nice-to-have
-- `context`: a brief explanation of why this gap matters for this role
+- `context`: MUST include all of the following in 1-3 sentences:
+  1) The aspect of the role this gap impacts (tie to a key responsibility / requirement / domain)
+  2) Why it matters (risk if missing; what success depends on; what recruiters use it as a signal for)
+  3) Whether it is missing vs underrepresented AND what evidence is missing in the resume (e.g., no bullet evidence,
+     no tool mentioned, no domain examples, no credential listed). Do NOT invent evidence.
 
-Only report genuine gaps. If the candidate clearly has a skill (even under a different name
-or demonstrated through experience), do NOT list it as a gap.
+PRIORITIZATION GUIDANCE
+- Surface gaps that are directly tied to the job's key responsibilities and required technical skills first.
+- Include domain/industry gaps only when the posting emphasizes them (regulated industry, specific domain, etc.).
 
 Candidate resume data:
 ---

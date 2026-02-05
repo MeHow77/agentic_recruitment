@@ -17,4 +17,18 @@ async def adjust_data(
         job_keywords=job_keywords.model_dump_json(indent=2),
         skill_gaps=skill_gaps.model_dump_json(indent=2),
     )
-    return await provider.generate_structured(prompt, ExperienceData)
+    adjusted = await provider.generate_structured(prompt, ExperienceData)
+    return _replace_em_dashes(adjusted)
+
+
+def _replace_em_dashes(data: ExperienceData) -> ExperienceData:
+    def replace(text: str) -> str:
+        return text.replace("—", "-")
+
+    data.summary = replace(data.summary)
+    for entry in data.experience:
+        entry.title = replace(entry.title)
+        entry.company = replace(entry.company)
+        entry.date = replace(entry.date)
+        entry.bullets = [replace(bullet) for bullet in entry.bullets]
+    return data
