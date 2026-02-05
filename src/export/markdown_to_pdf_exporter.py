@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 from typing import Any, Dict
 
-from src.export.provider import DocumentExporter
+from src.export.document_exporter import DocumentExporter
 from src.rendering.provider import TemplateRenderer
 
 logger = logging.getLogger(__name__)

@@ -4,12 +4,12 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from src.storage.provider import StorageProvider
+from src.storage.file_storage import FileStorage
 
 logger = logging.getLogger(__name__)
 
 
-class LocalFileStorage(StorageProvider):
+class LocalFileFileStorage(FileStorage):
     def __init__(self, base_dir: Path = Path("outputs")) -> None:
         self._base_dir = base_dir
 

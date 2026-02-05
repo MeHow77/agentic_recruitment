@@ -16,9 +16,9 @@ class EducationEntry(BaseModel):
 
 
 class Skills(BaseModel):
-    languages: list[str]
-    tools: list[str]
-    spoken: list[str]
+    languages: list[str] = []
+    tools: list[str] = []
+    spoken: list[str] = []
 
 
 class AwardEntry(BaseModel):
@@ -37,7 +37,7 @@ class PublicationEntry(BaseModel):
 class ExperienceData(BaseModel):
     summary: str
     experience: list[ExperienceEntry]
-    education: list[EducationEntry]
+    education: list[EducationEntry] = []
     skills: Skills
     awards: list[AwardEntry] = []
     publications: list[PublicationEntry] = []

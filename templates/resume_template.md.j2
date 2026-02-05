@@ -1,5 +1,4 @@
 ---
----
 
 # {{ personal.name }}
 
@@ -24,9 +23,14 @@
 ## Experience
 
 {% for job in experience %}
-**{{ job.title }}**
-  : **{{ job.company }}**
-  : **{{ job.date }}**
+<div style="display:flex; justify-content:space-between; align-items:baseline;">
+  <div><strong>{{ job.title }}</strong></div>
+  <div style="text-align:right;"><strong>{{ job.company }}</strong></div>
+</div>
+<div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:0.1rem;">
+  <div></div>
+  <div style="text-align:right;">{{ job.date }}</div>
+</div>
 
 {% for bullet in job.bullets %}
 - {{ bullet }}
@@ -45,9 +49,3 @@
   : {{ edu.location }}
 
 {% endfor %}
-
-{#{% if summary %}#}
-{### Professional Summary#}
-{#{{ summary }}#}
-{#{% endif %}#}
-
