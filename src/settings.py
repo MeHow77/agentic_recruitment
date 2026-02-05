@@ -66,6 +66,7 @@ class Settings(BaseSettings):
     gaps_filename: str = "gaps.json"
     log_level: str = "INFO"
     port: int | None = None
+    interactive: bool = False
 
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,

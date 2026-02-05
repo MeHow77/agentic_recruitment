@@ -1,11 +1,11 @@
 llm_provider = "openai"
-# llm_model = "gpt-5.1"
+llm_model = "gpt-5-mini"
 
 md_j2_template = "templates/resume_template.md.j2"
 master_json = "data/master_data.json"
 personal_json = "data/personal_data.json"
 cli_converter_path = "external/markdown_resume/packages/pdf-cli/bin/md-resume.js"
-# job_urls_file = "data/job_urls.json"
+job_urls_file = "data/job_urls.json"
 
 output_dir = "outputs"
 pdf_paper_size = "A4"
@@ -15,4 +15,5 @@ keywords_filename = "keywords.json"
 gaps_filename = "gaps.json"
 
 log_level = "INFO"
-# port = 7777
+interactive = false
+port = 7777

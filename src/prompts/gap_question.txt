@@ -1,0 +1,22 @@
+You are helping a job candidate improve their resume by exploring skill gaps.
+
+Generate a natural, conversational question to ask about the following skill gap. The goal is to
+help the candidate recall if they have any relevant experience with this skill that might not be
+reflected in their current resume.
+
+Skill gap:
+- Skill: {skill}
+- Category: {category}
+- Importance: {importance}
+- Context: {context}
+
+Guidelines:
+- Ask in a friendly, conversational tone
+- Be specific about what kinds of experience would be relevant
+- Give 1-2 concrete examples of what might count as relevant experience
+- Keep the question concise (2-3 sentences max)
+
+Example output format:
+"Have you worked with [skill] in any capacity? This could include things like [example 1] or [example 2]."
+
+Generate only the question, no additional text.

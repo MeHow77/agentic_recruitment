@@ -1,12 +1,9 @@
-import argparse
 import asyncio
 import json
 import logging
 import re
 from datetime import datetime
 from pathlib import Path
-
-from dotenv import dotenv_values
 
 from src.agents.extract_job_keywords import extract_job_keywords
 from src.agents.analyze_skill_gaps import analyze_skill_gaps
@@ -18,7 +15,7 @@ from src.export.markdown_to_pdf_exporter import MarkdownToPDFExporter
 from src.models.extraction_run import JobKeywordResult
 from src.llm.factory import create_llm_provider
 from src.storage.local_file_storage import LocalFileFileStorage
-from src.settings import ENV_FILE, Settings
+from src.settings import Settings
 
 
 def setup_logging(level="INFO"):
@@ -29,13 +26,6 @@ def setup_logging(level="INFO"):
         datefmt="%Y-%m-%d %H:%M:%S",
     )
     return logging.getLogger(__name__)
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(description="Resume generator")
-
-    parser.add_argument("--llm-api-key", dest="llm_api_key", type=str)
-    return parser.parse_args()
 
 
 def _sanitize(name: str) -> str:
@@ -49,10 +39,7 @@ def _build_output_dir(base: str | Path, company: str = "base", title: str = "res
 
 
 async def main():
-    args = parse_args()
-    env_values = dotenv_values(ENV_FILE)
-    llm_api_key = args.llm_api_key or env_values.get("LLM_API_KEY")
-    settings = Settings(llm_api_key=llm_api_key) if llm_api_key else Settings()
+    settings = Settings()
     logger = setup_logging(settings.log_level)
 
     logger.info("Starting resume generator")
@@ -122,7 +109,16 @@ async def main():
         gaps = await analyze_skill_gaps(experience_data, keywords, provider)
         job_storage.save_model(gaps, Path(settings.gaps_filename))
 
-        adjusted = await adjust_data(experience_data, keywords, gaps, provider)
+        if settings.interactive:
+            from src.agents.interactive_improvement import run_interactive_improvement
+            from src.cli.console import QuestionaryConsole
+
+            improved = await run_interactive_improvement(
+                experience_data, gaps, provider, QuestionaryConsole()
+            )
+            adjusted = await adjust_data(improved, keywords, gaps, provider)
+        else:
+            adjusted = await adjust_data(experience_data, keywords, gaps, provider)
 
         combined = {**adjusted.model_dump(), **personal_data}
         exporter.export(data=combined, output_path=output_dir / settings.pdf_filename)

@@ -1,0 +1,29 @@
+You are helping a job candidate uncover hidden achievements from their work experience.
+
+Given this job experience entry, generate 2-3 probing questions to help the candidate recall
+specific accomplishments, metrics, and impact that might strengthen their resume bullets.
+
+Job entry:
+- Title: {title}
+- Company: {company}
+- Date: {date}
+- Current bullets:
+{bullets}
+
+Relevant skills we're trying to highlight (from gap analysis):
+{relevant_skills}
+
+Focus your questions on:
+1. Metrics and quantifiable impact (numbers, percentages, scale)
+2. Scope and complexity (team size, users affected, systems involved)
+3. Methods and tools used (technologies, frameworks, approaches)
+4. Problems solved and challenges overcome
+
+Guidelines:
+- Ask specific, targeted questions based on the bullet points shown
+- Help the candidate think beyond vague descriptions to concrete details
+- Be conversational and encouraging
+- Each question should be 1-2 sentences
+
+Output format - return ONLY a JSON array of question strings:
+["Question 1?", "Question 2?", "Question 3?"]

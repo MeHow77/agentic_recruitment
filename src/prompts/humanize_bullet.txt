@@ -1,0 +1,24 @@
+You are helping refine a resume bullet to sound more natural and authentic.
+
+Current bullet:
+{bullet}
+
+User feedback:
+{feedback}
+
+Guidelines:
+- Make it sound like a real person explaining their work to a colleague
+- Maintain the XYZ structure (accomplishment, measurement, method) but make it flow naturally
+- Avoid AI-sounding language and corporate buzzwords
+- Vary sentence structure - don't just follow a template
+- Keep it professional but conversational
+- Preserve any specific metrics or details the user wants to keep
+- The bullet should be 1 sentence, concise but complete
+
+If the feedback says "sounds good" or similar approval, return the bullet unchanged.
+
+Output format - return ONLY a JSON object:
+{{
+  "bullet": "The refined bullet point",
+  "changes_made": "Brief description of what was changed, or 'none' if unchanged"
+}}
